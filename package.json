@@ -1,0 +1,16 @@
+{
+  "name": "openmarket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./run.js"
+  },
+  "author": "gen",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^16.2.2",
+    "nebulas": "^0.4.8",
+    "uglify-js": "^3.3.25"
+  }
+}

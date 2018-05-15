@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OMarket</title>
+    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="css/octicons.min.css" type="text/css" rel="stylesheet">
+    <link href="css/main.css" type="text/css" rel="stylesheet">
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/nebPay.js"></script>
+    <script src="js/nebulas.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">OMarket</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="./#android" data-text="Android">Android</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="./#dapp" data-text="DApp">DApp</a>
+            </li>
+        </ul>
+
+        <a href="post.htm" class="btn btn-outline-light" data-text="Post">Post</a>
+    </div>
+</nav>
+
+<div class="container mt-4" style="max-width: 600px">
+    <div id="myApps" style="display: none;">
+        <div class="row">
+            <h3 data-text="My Apps">My Apps</h3>
+        </div>
+        <div class="row">
+            <table class="table table-hover table-info" id="myAppsTable">
+                <thead>
+                <tr>
+                    <td>AppID</td>
+                    <td>Actions</td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <h3 data-text="Post" id="post-pos">Post</h3>
+    </div>
+    <form class="mt-5" onsubmit="return false;" id="postForm">
+        <div class="alert alert-danger" id="alert" style="display: none"></div>
+        <div class="form-group row mt-2">
+            <div class="btn-group btn-group-toggle offset-sm-4 col-sm-4" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                    <input type="radio" name="appType" id="option1" value="android" checked data-text="Android"> Android
+                </label>
+                <label class="btn btn-secondary">
+                    <input type="radio" name="appType" id="option2" value="dapp" data-text="DApp"> DApp
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appName" class="col-sm-2 col-form-label" data-text="Name">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="appName" id="appName" data-placeholder="Name">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appPic" class="col-sm-2 col-form-label" data-text="Cover">Cover</label>
+            <div class="col-sm-10">
+                <input type="url" class="form-control" name="appPic" id="appPic" data-placeholder="Cover">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appAppID" class="col-sm-2 col-form-label" data-text="App ID">App ID</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="appAppID" id="appAppID" placeholder="cn.gen.genshelf">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appDes" class="col-sm-2 col-form-label" data-text="Visible">Visible</label>
+            <div class="col-sm-10">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="appVisible" id="visible" value="visible" checked> On
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="appVisible" id="disable" value="disable"> Off
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appVersion" class="col-sm-2 col-form-label" data-text="Version">Version</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="appVersion" id="appVersion" data-placeholder="Version">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appAddress" class="col-sm-2 col-form-label" data-text="Address">Address</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="appAddress" id="appAddress" data-placeholder="Address">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="appDes" class="col-sm-2 col-form-label" data-text="Description">Description</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" name="appDes" id="appDes" data-placeholder="Description"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <button class="btn btn-primary offset-sm-4" data-text="Submit" type="submit" id="appSubmit">Submit</button>
+            <a href="apk" class="btn btn-success ml-3" id="preView" data-text="Preview" target="_blank">Preview</a>
+        </div>
+    </form>
+
+    <div class="form-group row">
+        <label for="output" class="col-sm-2 col-form-label" data-text="Output">Output</label>
+        </div>
+    <div class="form-control mt-3" id="output" style="height: 180px; overflow-y: auto;"></div>
+</div>
+
+<script src="js/post.min.js?r=23"></script>
+</body>
+</html>
