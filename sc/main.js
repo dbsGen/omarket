@@ -7,11 +7,13 @@ var RETURN_MAX = 16;
 var COMMENT_MAX = 16;
 
 var CommentItem = function (owner) {
-    if (this.owner) {
+    if (owner) {
         this.owner = owner;
         this.visible = true;
         this.timestamp = Blockchain.block.timestamp;
         this.id = "" + this.timestamp + Math.random();
+        this.agreement = 0;
+        this.manners = {};
     }
 };
 
@@ -26,6 +28,7 @@ CommentItem.from = function (text) {
     item.prev_id = json.prev_id;
     item.timestamp = json.timestamp;
     item.visible = json.visible;
+    item.manners = json.manners;
     return item;
 };
 
@@ -63,6 +66,8 @@ AppItem.from = function (owner, app_id) {
         item.visible = json.visible;
         item.pic_address = json.pic_address;
         item.des = json.des;
+        item.last_timestamp = json.last_timestamp;
+        item.last_comment_id = json.last_comment_id;
     }
     return item;
 };
@@ -211,7 +216,7 @@ OpenMarket.prototype = {
             this._save(item);
         }
     },
-    fetchComments: function(item_id, last_id) {
+    fetchComments: function(item_id, last_id, bad) {
         var item = this.items.get(item_id);
         var comments = [];
         if (item) {
@@ -221,7 +226,8 @@ OpenMarket.prototype = {
             while (comments.length < COMMENT_MAX) {
                 var comment = this.comments.get(last_id);
                 if (comment) {
-                    if (comment.agreement >= 0) comments.push(comment);
+                    if (!bad && comment.agreement >= 0) comments.push(comment);
+                    else if (bad && comment.agreement < 0) comments.push(comment);
                     last_id = comment.next_id;
                 }else {
                     break;
@@ -230,7 +236,8 @@ OpenMarket.prototype = {
         }
         return comments;
     },
-    postComment: function (item_id, owner, content) {
+    postComment: function (item_id, content) {
+        var owner = Blockchain.transaction.from;
         var item = this.items.get(item_id);
         if (item) {
             var comment = new CommentItem(owner);
@@ -245,6 +252,29 @@ OpenMarket.prototype = {
             }
             this.comments.set(comment.id, comment);
             this._save(item);
+            return {
+                comment: comment,
+                id: comment.id,
+                last_comment: last_comment,
+                item: item
+            };
+        }
+        return null;
+    },
+    manner: function (comment_id, manner) {
+        var owner = Blockchain.transaction.from;
+        var comment = this.comments.get(comment_id);
+        if (comment) {
+            if (!comment.manners) {
+                comment.manners = {};
+            }
+            if (manner > 0) manner = 1;
+            else if (manner < 0) manner = -1;
+            else manner = 0;
+            var old = comment.manners[owner] || 0;
+            comment.agreement += (manner - old);
+            comment.manners[owner] = manner;
+            this.comments.set(comment_id, comment);
         }
     }
 };

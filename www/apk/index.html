@@ -5,11 +5,12 @@
     <title>OMarket</title>
     <link href="../css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <link href="../css/octicons.min.css" type="text/css" rel="stylesheet">
-    <link href="../css/main.css?r=4" type="text/css" rel="stylesheet">
+    <link href="../css/main.css?r=6" type="text/css" rel="stylesheet">
     <link href="../css/spinkit.css" type="text/css" rel="stylesheet">
     <script src="../js/jquery-3.3.1.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/nebPay.js"></script>
+    <script src="../js/markdown.min.js"></script>
     <script src="https://unpkg.com/ipfs/dist/index.min.js"></script>
 </head>
 <body>
@@ -56,11 +57,32 @@
         <div class="form-control offset-sm-3 col-sm-6" id="console"></div>
     </div>
     <div class="row mt-2">
-        <div class="app-des">
+        <div class="navbar bg-light" style="width: 100%">
+            <h4 data-text="Description">Description</h4>
+        </div>
+        <div class="app-des p-4">
         </div>
     </div>
     <div class="row mt-2">
-        <div class="comments"></div>
+        <div class="navbar bg-light" style="width: 100%">
+            <h4 data-text="Comments">Comments</h4>
+        </div>
+        <div class="comments p-4">
+        </div>
+        <div class="no-login alert alert-danger">
+            <span data-text="Not login"></span>
+            <a href="https://github.com/ChengOrangeJu/WebExtensionWallet" target="_blank">Plugin</a>
+        </div>
+        <form class="post-comment" style="display: none" onsubmit="return false">
+            <textarea class="form-control" id="commentPoster" name="content"></textarea>
+            <div class="form-control" id="commentPreview" style="display: none"></div>
+            <div class="post-actions mt-2">
+                <div class="float-right">
+                    <button class="btn btn-success preview-button" type="button" data-text="Preview">Preview</button>
+                    <button class="btn btn-primary post-button" type="submit" data-text="Post Comment">Post Comment</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -69,6 +91,6 @@
     <div class="popover-body"></div>
 </div>
 
-<script src="../js/apk.min.js?r=5"></script>
+<script src="../js/apk.min.js?r=6"></script>
 </body>
 </html>

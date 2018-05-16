@@ -4,12 +4,13 @@
 
 var config = {
     host: "https://testnet.nebulas.io",
-    address: 'n1yiWPJEd5JWAtCN4S7QCDyC3EMfCK24mXG'
+    address: 'n235in8CvMnpcB2YGcWdcUSeYKtYG26Kvr7'
 };
 
 var none = 0;
 
 var nebulas = require("nebulas");
+var NebAccount = nebulas.Account;
 
 function LocAccount(ops) {
     this.options = $.extend({}, config, ops);
@@ -150,8 +151,12 @@ LocAccount.prototype.locCall = function () {
         };
         var self = this;
         (function (ret) {
+            var from = self.account;
+            if (!from) {
+                from = NebAccount.NewAccount().getAddressString();
+            }
             self.neb.api.call({
-                from: self.account,
+                from: from,
                 to: self.options.address,
                 value: 0,
                 nonce: none++,

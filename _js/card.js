@@ -25,6 +25,9 @@ Card.prototype.setData = function (data) {
     this.$name.text(data.name);
     this.$date.text(loc.loc('Last modified') + ":" + TimeFormat(new Date(data.last_timestamp * 1000), 'yyyy-MM-dd'));
     this.$elem.attr('href', 'apk/#'+data.owner+'/'+data.app_id);
+    if (data.des) {
+        this.$des.text(markdown.toHTML(data.des).replace(/\<[^\>]*\>/g, ''));
+    }
     this.data = data;
 };
 

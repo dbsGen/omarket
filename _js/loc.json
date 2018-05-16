@@ -27,7 +27,9 @@
     "Select": "选取",
     "Visible": "可见",
     "Lack of des": "没有简介",
-    "Preview": "预览"
+    "Preview": "预览",
+    "Comments": "评论",
+    "Post Comment": "发送"
   },
   "en": {
     "Android": "Android",
@@ -57,6 +59,8 @@
     "Select": "Select",
     "Visible": "Visible",
     "Lack of des": "Lack of description",
-    "Preview": "Preview"
+    "Preview": "Preview",
+    "Comments": "Comments",
+    "Post Comment": "Post Comment"
   }
 }

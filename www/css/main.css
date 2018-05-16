@@ -174,3 +174,46 @@
 .app-date {
     font-size: 12px;
 }
+
+.comments {
+    width: 100%;
+}
+.comment {
+    border-bottom: solid 1px #bbb;
+    width: 100%;
+}
+
+.comment .comment-owner {
+    color: #999;
+    font-size: 14px;
+    transition: color 300ms;
+}
+
+.comment .comment-owner:hover {
+    color: aqua;
+}
+
+.comment .comment-owner:after {
+    content: ':';
+}
+
+.comment .comment-content {
+    color: #6c757d;
+    font-size: 14px;
+    padding: 10px 0 10px 20px;
+}
+
+.post-comment {
+    width: 100%;
+    padding: 0 32px;
+}
+
+.post-comment .post-actions {
+}
+
+.post-comment .post-button {
+}
+
+.no-login {
+    margin: 0 32px;
+}

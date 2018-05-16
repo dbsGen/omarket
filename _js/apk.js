@@ -7,6 +7,7 @@ var Account = require('./account');
 var LoadingSpinner = require('./loading_spinner');
 var TimeFormat = require('./timeformat');
 var ConsoleOutput = require('./console_output');
+var Comment = require('./comment');
 var label = "xyn-" + Math.random() + Date.now();
 var ipfs = new Ipfs({ repo: label});
 
@@ -29,7 +30,7 @@ function setData(data) {
     $appOwner.text(loc.loc('Uploader')+':'+data.owner);
     $appDate.text(loc.loc('Last modified')+':'+TimeFormat(new Date(data.last_timestamp * 1000), 'yyyy-MM-dd'));
     if (data.des) {
-        $appDes.text(markdown.toHTML(data.des));
+        $appDes.html(markdown.toHTML(data.des));
     }
     currentVersion = appData.releases[0];
     updateVersion(currentVersion);
@@ -56,20 +57,27 @@ if (cur) data = JSON.parse(cur);
 if (arr.length >= 2) {
     if (data && data.owner === arr[0] && data.app_id === arr[1]) {
         setData(data);
+        if (!data.test) {
+            fetchData(arr[0] +'/'+arr[1]);
+        }
     }else {
-        LoadingSpinner.show(LoadingSpinner.LOADING);
-        Account.locCall('fetchOne', arr[0] +'/'+arr[1])
-            .then(function (res) {
-                var json = JSON.parse(res.result);
-                setData(json);
-                LoadingSpinner.setStatus(LoadingSpinner.CHECKED);
-                LoadingSpinner.miss(600);
-            })
-            .catch(function (err) {
-                LoadingSpinner.setStatus(LoadingSpinner.FAILED);
-                LoadingSpinner.miss(600);
-            });
+        fetchData(arr[0] +'/'+arr[1]);
     }
+}
+
+function fetchData(id) {
+    LoadingSpinner.show(LoadingSpinner.LOADING);
+    Account.locCall('fetchOne', id)
+        .then(function (res) {
+            var json = JSON.parse(res.result);
+            setData(json);
+            LoadingSpinner.setStatus(LoadingSpinner.CHECKED);
+            LoadingSpinner.miss(600);
+        })
+        .catch(function (err) {
+            LoadingSpinner.setStatus(LoadingSpinner.FAILED);
+            LoadingSpinner.miss(600);
+        });
 }
 
 function updateVersion(r) {
@@ -176,3 +184,82 @@ $versionsButton.click(function () {
         releasePop = true;
     }, 100);
 });
+
+var $postComment = $('.post-comment'), $commentPreview = $('#commentPreview');
+var $previewButton = $('.preview-button'), $commentPoster = $('#commentPoster');
+var $comments = $('.comments');
+var comments = [];
+
+Account.onAccount = function (account) {
+    $('.no-login').slideUp();
+    $postComment.slideDown();
+};
+
+$postComment.on('submit', function () {
+    if (!appData) return null;
+    var arr = $postComment.serializeArray();
+    var data = {};
+    for (var i = 0, t = arr.length; i < t; ++i) {
+        var d = arr[i];
+        data[d.name] = d.value;
+    }
+    var ctn = data.content.trim();
+    if (ctn.length === 0) {
+        LoadingSpinner.show(LoadingSpinner.FAILED, loc.loc('Lack of Content'));
+        LoadingSpinner.miss(1600);
+        return false;
+    }
+
+    LoadingSpinner.show(LoadingSpinner.LOADING);
+    Account.transaction('postComment', appData.owner + '/' + appData.app_id, ctn)
+        .then(function (res) {
+            var com = new Comment({
+                owner: Account.account,
+                content: ctn
+            });
+            comments.unshift(com);
+            $comments.preppend(com.$elem);
+            $commentPoster.val('');
+            LoadingSpinner.setStatus(LoadingSpinner.CHECKED);
+            LoadingSpinner.miss(1600);
+        })
+        .catch(function (err) {
+            LoadingSpinner.setStatus(LoadingSpinner.FAILED);
+            LoadingSpinner.miss(1600);
+        });
+
+    return false;
+});
+
+var is_preview = false;
+$previewButton.click(function () {
+    is_preview = !is_preview;
+    if (is_preview) {
+        $commentPoster.slideUp();
+        $commentPreview.slideDown();
+        $commentPreview.html(markdown.toHTML($commentPoster.val()));
+    }else {
+        $commentPoster.slideDown();
+        $commentPreview.slideUp();
+    }
+});
+
+function fetchComment(id, clean) {
+    Account.locCall('fetchComments', id, null)
+        .then(function (res) {
+            if (clean) {
+                comments.splice(0, comments.length);
+                $comments.empty();
+            }
+            var data = JSON.parse(res.result);
+            for (var i = 0, t = data.length; i < t; ++i) {
+                var com = new Comment(data[i]);
+                comments.push(com);
+                $comments.append(com.$elem);
+            }
+        })
+        .catch(function (err) {
+
+        });
+}
+fetchComment(location.hash.replace(/^\#/, ''), true);

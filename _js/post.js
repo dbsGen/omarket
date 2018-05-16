@@ -211,6 +211,7 @@ $('#preView').click(function () {
         pic_address: data.appPic,
         app_id: data.appAppID,
         des: data.appDes,
+        test: true,
         releases: [{
             version: data.appVersion,
             address: data.appAddress
