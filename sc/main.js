@@ -144,10 +144,20 @@ OpenMarket.prototype = {
         var owner = Blockchain.transaction.from;
         return this.user2apps.get(owner);
     },
+    _getItem: function(id, cache) {
+        if (cache[id]) {
+            return cache[id];
+        }else {
+            var item = this.items.get(id);
+            cache[id] = item;
+            return item;
+        }
+    },
     post: function(type, name, app_id, version, address, pic_address, des, visible) {
+        var cache = {};
         var owner = Blockchain.transaction.from;
         var id = AppItem.genId(owner, app_id);
-        var item = this.items.get(id);
+        var item = this._getItem(id, cache);
         if (!item) {
             item = AppItem.from(owner, app_id);
         }
@@ -158,6 +168,9 @@ OpenMarket.prototype = {
                 address: address,
                 timestamp: timestamp
             });
+        }
+        if (item.releases.length === 0) {
+            throw 'Lack of Version and Address.';
         }
         item.pic_address = pic_address;
         if (name && name != 'null')
@@ -179,25 +192,29 @@ OpenMarket.prototype = {
         if (last_id === id) {
 
         }else {
-            var last_item = this.items.get(last_id);
+            var last_item = this._getItem(last_id, cache);
             if (!last_item) {
                 last_id = item.id;
                 LocalContractStorage.set(key, last_id);
             }else {
                 var dn = item.main_next_id;
                 var dp = item.main_prev_id;
-                item.main_next_id = dn;
+                item.main_next_id = last_item.id;
                 item.main_prev_id = null;
                 last_item.main_prev_id = id;
-                var p_item = dp ? this.items.get(dp) : null;
-                var n_item = dn ? this.items.get(dn) : null;
-                p_item.main_next_id = n_item ? n_item.id : null;
-                n_item.main_prev_id = p_item ? p_item.id : null;
+                var p_item = dp ? this._getItem(dp, cache) : null;
+                var n_item = dn ? this._getItem(dn, cache) : null;
+                if (p_item) {
+                    p_item.main_next_id = n_item ? n_item.id : null;
+                    this._save(p_item);
+                }
+                if (n_item) {
+                    n_item.main_prev_id = p_item ? p_item.id : null;
+                    this._save(n_item);
+                }
 
                 LocalContractStorage.set(key, id);
                 this._save(last_item);
-                this._save(p_item);
-                this._save(n_item);
             }
         }
         this._save(item);

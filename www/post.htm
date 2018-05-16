@@ -13,12 +13,12 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="/">OMarket</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mr-auto">
+    <a class="navbar-brand" href="./">OMarket</a>
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--<span class="navbar-toggler-icon"></span>-->
+    <!--</button>-->
+    <div class="" id="navbarNav">
+        <ul class="navbar-nav mr-auto" style="display: none">
             <li class="nav-item">
                 <a class="nav-link" href="./#android" data-text="Android">Android</a>
             </li>
@@ -52,9 +52,14 @@
     <div class="row">
         <h3 data-text="Post" id="post-pos">Post</h3>
     </div>
-    <form class="mt-5" onsubmit="return false;" id="postForm">
+    <form class="mt-3" onsubmit="return false;" id="postForm">
+        <div class="row">
+            <div class="alert alert-info col-12">
+                <span data-text="instructions1"></span>
+            </div>
+        </div>
         <div class="alert alert-danger" id="alert" style="display: none"></div>
-        <div class="form-group row mt-2">
+        <div class="form-group row mt-2" style="display: none">
             <div class="btn-group btn-group-toggle offset-sm-4 col-sm-4" data-toggle="buttons">
                 <label class="btn btn-secondary active">
                     <input type="radio" name="appType" id="option1" value="android" checked data-text="Android"> Android
@@ -98,13 +103,19 @@
         <div class="form-group row">
             <label for="appVersion" class="col-sm-2 col-form-label" data-text="Version">Version</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="appVersion" id="appVersion" data-placeholder="Version">
+                <input type="text" class="form-control" name="appVersion" id="appVersion" placeholder="0.0.1">
             </div>
         </div>
         <div class="form-group row">
             <label for="appAddress" class="col-sm-2 col-form-label" data-text="Address">Address</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="appAddress" id="appAddress" data-placeholder="Address">
+                <input type="text" class="form-control" name="appAddress" id="appAddress" data-placeholder="Ipfs hash">
+            </div>
+            <div class="col-sm-10 offset-sm-2 mt-2" >
+                <div class="alert alert-info mb-0">
+                    <span data-text="Upload link">Upload link</span>
+                    <a href="https://l2e.tv/xyun" target="_blank">https://l2e.tv/xyun</a>
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -115,17 +126,18 @@
         </div>
 
         <div class="form-group row">
+            <label for="output" class="col-sm-2 col-form-label" data-text="Output">Output</label>
+        </div>
+        <div class="form-control mt-3" id="output" style="height: 140px; overflow-y: auto;"></div>
+
+        <div class="form-group row mt-3">
             <button class="btn btn-primary offset-sm-4" data-text="Submit" type="submit" id="appSubmit">Submit</button>
             <a href="apk" class="btn btn-success ml-3" id="preView" data-text="Preview" target="_blank">Preview</a>
         </div>
     </form>
 
-    <div class="form-group row">
-        <label for="output" class="col-sm-2 col-form-label" data-text="Output">Output</label>
-        </div>
-    <div class="form-control mt-3" id="output" style="height: 180px; overflow-y: auto;"></div>
 </div>
 
-<script src="js/post.min.js?r=23"></script>
+<script src="js/post.min.js?r=24"></script>
 </body>
 </html>

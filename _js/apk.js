@@ -36,6 +36,7 @@ function setData(data) {
     updateVersion(currentVersion);
 
     var $releaseBody = $releasesPopover.find('.popover-body');
+    $releaseBody.empty();
     for (var i = 0, t = appData.releases.length; i < t; ++i) {
         var release = appData.releases[i];
         var vlink = $('<a href="javascript:void(0)" data-index="'+i+'">v'+release.version+'</a>');

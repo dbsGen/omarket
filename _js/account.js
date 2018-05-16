@@ -3,8 +3,8 @@
  */
 
 var config = {
-    host: "https://testnet.nebulas.io",
-    address: 'n235in8CvMnpcB2YGcWdcUSeYKtYG26Kvr7'
+    host: "https://mainnet.nebulas.io",
+    address: 'n1y44Zo4HrnbQTBcdWayguxKxZeuuXvp6wm'
 };
 
 var none = 0;

@@ -63,16 +63,8 @@ $postForm.on('submit', function () {
             showAlert(loc.loc('Lack of cover'));
             return false;
         }
-        if (data.appVersion.trim().length === 0) {
-            showAlert(loc.loc('Lack of version'));
-            return false;
-        }
         if (data.appAppID.trim().length === 0) {
             showAlert(loc.loc('Lack of app id'));
-            return false;
-        }
-        if (data.appAddress.trim().length === 0) {
-            showAlert(loc.loc('Lack of address'));
             return false;
         }
         if (data.appDes.trim().length === 0) {
@@ -188,16 +180,8 @@ $('#preView').click(function () {
         showAlert(loc.loc('Lack of cover'));
         return false;
     }
-    if (data.appVersion.trim().length === 0) {
-        showAlert(loc.loc('Lack of version'));
-        return false;
-    }
     if (data.appAppID.trim().length === 0) {
         showAlert(loc.loc('Lack of app id'));
-        return false;
-    }
-    if (data.appAddress.trim().length === 0) {
-        showAlert(loc.loc('Lack of address'));
         return false;
     }
     if (data.appDes.trim().length === 0) {

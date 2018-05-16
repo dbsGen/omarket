@@ -29,7 +29,10 @@
     "Lack of des": "没有简介",
     "Preview": "预览",
     "Comments": "评论",
-    "Post Comment": "发送"
+    "Post Comment": "发送",
+    "Ipfs hash": "Ipfs Hash",
+    "Upload link": "上传地址",
+    "instructions1": "如果只需要更新信息不用填入版本号和地址"
   },
   "en": {
     "Android": "Android",
@@ -61,6 +64,9 @@
     "Lack of des": "Lack of description",
     "Preview": "Preview",
     "Comments": "Comments",
-    "Post Comment": "Post Comment"
+    "Post Comment": "Post Comment",
+    "Ipfs hash": "Ipfs Hash",
+    "Upload link": "Upload link",
+    "instructions1": "Version and Address is optional when update app info."
   }
 }
