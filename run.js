@@ -5,7 +5,7 @@
 var browserify = require('browserify');
 var fs = require('fs');
 var UglifyJS = require("uglify-js");
-var debug = false;
+var debug = true;
 
 var jsPaths = [
     "_js/index.js",
