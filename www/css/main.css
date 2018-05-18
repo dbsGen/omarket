@@ -215,6 +215,10 @@
 }
 .app-owner {
     font-size: 12px;
+    display: inline-block;
+}
+.app-owner:hover {
+    color: #888;
 }
 .app-date {
     font-size: 12px;

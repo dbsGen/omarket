@@ -8,6 +8,8 @@ function Comment(data) {
     this.$owner = this.$elem.find('.comment-owner');
     this.$content = this.$elem.find('.comment-content');
     this.$owner.text(data.owner);
+    this.$owner.attr('data-wallet', data.owner);
+    Profiles.elem(this.$owner[0]);
     this.$content.html(markdown.toHTML(data.content));
 }
 

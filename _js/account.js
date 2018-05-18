@@ -9,7 +9,6 @@ var config = {
 
 var none = 0;
 
-var nebulas = require("nebulas");
 var NebAccount = nebulas.Account;
 
 function LocAccount(ops) {

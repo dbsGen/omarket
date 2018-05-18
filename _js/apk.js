@@ -15,7 +15,7 @@ loc();
 
 var $title = $('#title');
 var $appCover = $('.app-cover'), $appName = $('.app-name'), $appDate = $('.app-date');
-var $appDes = $('.app-des'), $appOwner = $('.app-owner');
+var $appDes = $('.app-des'), $appOwner = $('.app-owner .owner-name');
 var $downloadButton = $('#downloadButton');
 var consoleDiv = new ConsoleOutput($('#console'));
 var appData, currentVersion;
@@ -27,7 +27,9 @@ function setData(data) {
     $title.text(data.name);
     $appCover.css('background-image', "url('"+data.pic_address+"')");
     $appName.text(data.name);
-    $appOwner.text(loc.loc('Uploader')+':'+data.owner);
+    $appOwner.text(data.owner);
+    $appOwner.attr('data-wallet', data.owner);
+    Profiles.elem($appOwner[0]);
     $appDate.text(loc.loc('Last modified')+':'+TimeFormat(new Date(data.last_timestamp * 1000), 'yyyy-MM-dd'));
     if (data.des) {
         $appDes.html(markdown.toHTML(data.des));
